@@ -1,0 +1,24 @@
+{
+  "name": "assignment15",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Omar-MK-20",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start:js": "node --watch ./dist/index.js",
+    "start:ts": "npx tsc -w",
+    "dev": "concurrently \"tsc -w\" \"node --watch ./dist/index.js\" --kill-others"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^25.5.2",
+    "concurrently": "^9.2.1",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.2.0"
+  }
+}
