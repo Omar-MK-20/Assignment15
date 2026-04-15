@@ -1,9 +1,9 @@
 import { Admin } from "./Models/Admin.js";
-import { NoteBook } from "./Models/NoteBook.js";
+import { NoteBook, type INote } from "./Models/NoteBook.js";
 import { User } from "./Models/User.js";
 import type { TSession } from "./util/types.js";
 
-export const currentSession: TSession = { user: undefined, noteBook: undefined, note: undefined };
+const currentSession: TSession = { user: undefined, noteBook: undefined, note: undefined };
 
 const admin = new Admin("Omar", "omar@admin.com", "admin", "01012345678", 25);
 let users: User[] = [admin];
@@ -60,7 +60,7 @@ users.push(user1, user2);
 
 export function addUser(user: User)
 {
-    if (!(user instanceof User)) return false;
+    if (!(user instanceof User)) throw new Error("Error adding user");
     users.push(user);
     return true;
 }
@@ -74,4 +74,40 @@ export function getSingleUser(findCallBackFN: (value: User, index: number, obj: 
 {
     return users.find(findCallBackFN);
 }
+
+
+export function setUser(user: User | undefined)
+{
+    currentSession.user = user;
+}
+
+export function getUser()
+{
+    if (!currentSession.user) throw new Error("Login first");
+    return currentSession.user;
+}
+
+export function setNoteBook(noteBook: NoteBook | undefined)
+{
+    currentSession.noteBook = noteBook;
+}
+
+export function getNoteBook()
+{
+    if (!currentSession.noteBook) throw new Error("Select Note Book first");
+    return currentSession.noteBook;
+}
+
+export function setNote(note: INote | undefined)
+{
+    currentSession.note = note;
+}
+
+export function getNote()
+{
+    if (!currentSession.note) throw new Error("Select Note first");
+    return currentSession.note;
+}
+
+
 
