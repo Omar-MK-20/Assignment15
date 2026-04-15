@@ -34,8 +34,7 @@ export class User
     {
         if (value < 18 || value > 60)
         {
-            console.error(chalk.red("Error:     ") + "Invalid age");
-            return;
+            throw new Error(chalk.red("Error:     ") + "Invalid age");
         }
         this._age = value;
     }
