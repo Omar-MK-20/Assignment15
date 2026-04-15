@@ -1,12 +1,11 @@
-import * as prompt from "@clack/prompts";
-import { addUser, currentSession, getSingleUser } from "../database.js";
+import { addUser, getSingleUser, setNoteBook, setUser } from "../database.js";
 import { NoteBook } from "../Models/NoteBook.js";
 import { User } from "../Models/User.js";
 
 
 export class AuthService
 {
-    public static async signup(userData: { name: string; email: string; password: string; phone: string; age: string; })
+    public static signup(userData: { name: string; email: string; password: string; phone: string; age: string; })
     {
 
         const age = Number(userData.age);
@@ -35,7 +34,7 @@ export class AuthService
 
     }
 
-    public static async login(userData: { email: string; password: string; })
+    public static login(userData: { email: string; password: string; })
     {
 
 
@@ -46,7 +45,8 @@ export class AuthService
             throw new Error("Invalid email or password");
         }
 
-        currentSession.user = existUser;
+        setUser(existUser);
+        setNoteBook(undefined);
 
         return existUser;
 
