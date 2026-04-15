@@ -1,181 +1,80 @@
-import * as prompt from "@clack/prompts";
+import * as DBRepo from "../database.js";
 import { NoteBook } from "../Models/NoteBook.js";
-import { currentSession } from "../database.js";
 
 export class NoteService
 {
-    public static async createNoteBook()
+    public static createNoteBook(noteBookName: string)
     {
-        prompt.log.step('Create Note Book');
-
-        if (!currentSession.user)
-        {
-            prompt.log.error("Login first to create Note Book");
-            return false;
-        }
-
-        const noteBookName = await prompt.text({
-            message: 'Enter Note Book name:',
-            validate(value) { if (!value) return `Name is required!`; },
-        });
-
-        if (prompt.isCancel(noteBookName))
-        {
-            // prompt.cancel('Operation cancelled.');
-            process.exit(0);
-        }
-
-
-        const newNoteBook = new NoteBook(noteBookName, currentSession.user);
-        currentSession.user.noteBooks.push(newNoteBook);
-        currentSession.noteBook = newNoteBook;
+        const newNoteBook = new NoteBook(noteBookName, DBRepo.getUser());
+        DBRepo.getUser().noteBooks.push(newNoteBook);
         return true;
 
     }
 
-
-    public static async getAllNoteBooks()
+    public static getAllNoteBooks()
     {
-        prompt.log.step('View all Note Books');
+        return DBRepo.getUser().noteBooks;
+    }
 
-        if (!currentSession.user)
-        {
-            prompt.log.error("Logon first to create Note Book");
-            return false;
-        }
-
-        const noteBookId = await prompt.select({
-            message: 'Pick a Note Book.',
-            options: [
-                ...currentSession.user.noteBooks.map((noteBook) =>
-                {
-                    return { value: noteBook.id, label: noteBook.name };
-                }),
-                { value: "createBook", label: 'Create new NoteBook' },
-            ],
-        });
-
-        if (prompt.isCancel(noteBookId))
-        {
-            // prompt.cancel('Operation cancelled.');
-            process.exit(0);
-        }
-
-        if (noteBookId == "createBook")
-        {
-            return await this.createNoteBook();
-        }
-
-        const existNoteBook = currentSession.user.noteBooks.find(noteBook => noteBook.id == noteBookId);
+    public static setNoteBook(noteBookId: string)
+    {
+        const existNoteBook = DBRepo.getUser().noteBooks.find(noteBook => noteBook.id == noteBookId);
 
         if (!existNoteBook)
         {
-            return false;
+            throw new Error("Choose Note Book first to set it");
         }
 
-        currentSession.noteBook = existNoteBook;
+        DBRepo.setNoteBook(existNoteBook);
+        DBRepo.setNote(undefined);
         return true;
-
-
     }
 
-
-    public static async createNote()
+    public static createNote(noteData: { title: string; content: string; })
     {
-        prompt.log.step('Create Note');
-
-        if (!currentSession.user)
-        {
-            prompt.log.error("Login first to create Note Book");
-            return false;
-        }
-
-        if (!currentSession.noteBook)
-        {
-            prompt.log.error("Choose Note Book first to create Note");
-            return false;
-        }
-
-        const noteData = await prompt.group(
-            {
-                title: () => prompt.text({
-                    message: 'Enter Note title:',
-                    validate(value) { if (!value) return `Title is required!`; },
-                }),
-                content: () => prompt.text({
-                    message: 'Enter Note content:',
-                    validate(value) { if (!value) return `Content is required!`; },
-                }),
-            },
-            {
-                // On Cancel callback that wraps the group
-                // So if the user cancels one of the prompts in the group this function will be called
-                onCancel: ({ results }) =>
-                {
-                    // prompt.cancel('Operation cancelled.');
-                    process.exit(0);
-                },
-            }
-        );
-
-
-        const newNote = currentSession.noteBook.addNote(noteData.title, noteData.content);
-        currentSession.note = newNote;
-        return true;
-
+        const newNoteBook = DBRepo.getNoteBook().addNote(noteData.title.trim(), noteData.content.trim());
+        return newNoteBook;
     }
 
-
-    public static async getAllNotes()
+    public static getAllNotes()
     {
-        prompt.log.step('View all Notes');
+        return DBRepo.getNoteBook().notes;
+    }
 
-        if (!currentSession.user)
-        {
-            prompt.log.error("Logon first to create Note Book");
-            return false;
-        }
-        if (!currentSession.noteBook)
-        {
-            prompt.log.error("Choose Note Book first to create Note");
-            return false;
-        }
-
-        const noteId = await prompt.select({
-            message: 'Pick a Note.',
-            options: [
-                ...currentSession.noteBook.notes.map((note) =>
-                {
-                    return { value: note.id, label: note.title };
-                }),
-                { value: "createNote", label: 'Create new Note' },
-            ],
-        });
-
-        if (prompt.isCancel(noteId))
-        {
-            // prompt.cancel('Operation cancelled.');
-            process.exit(0);
-        }
-
-        if (noteId == "createNote")
-        {
-            return await this.createNote();
-        }
-
-        const existNote = currentSession.noteBook.notes.find(note => note.id == noteId);
+    public static setNote(noteId: string)
+    {
+        const existNote = DBRepo.getNoteBook().notes.find(note => note.id == noteId);
 
         if (!existNote)
         {
-            return false;
+            throw new Error("Choose Note first to set it");
         }
 
-        currentSession.note = existNote;
+        DBRepo.setNote(existNote);
         return true;
     }
 
+    public static updateNote(noteData: { title?: string, content?: string; })
+    {
+        const title = noteData.title?.trim();
+        const content = noteData.content?.trim();
 
+        if (!title && !content)
+        {
+            throw new Error("You must enter title or content");
+        }
 
+        if (title) DBRepo.getNote().title = title;
+        if (content) DBRepo.getNote().content = content;
+
+        return true;
+
+    }
+
+    public static previewNote()
+    {
+        return DBRepo.getNote().preview();
+    }
 
 
 }
