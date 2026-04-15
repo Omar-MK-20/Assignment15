@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import { randomUUID } from "node:crypto";
-import type { User } from "./User.ts";
+import { User } from "./User.js";
 
 
 export interface INote 
@@ -11,6 +11,21 @@ export interface INote
     author: User;
     noteBook: NoteBook;
     preview(): string;
+}
+
+
+export function isInstanceOfINote(obj: any): obj is INote
+{
+    return (
+        obj !== null &&
+        typeof obj === 'object' &&
+        typeof obj.id === 'string' &&
+        typeof obj.title === 'string' &&
+        typeof obj.content === 'string' &&
+        obj.author instanceof User &&
+        obj.noteBook instanceof NoteBook &&
+        typeof obj.preview === 'function'
+    );
 }
 
 
