@@ -1,12 +1,15 @@
 import { Admin } from "./Models/Admin.js";
 import { NoteBook, type INote } from "./Models/NoteBook.js";
+import { Storage } from "./Models/Storage.js";
 import { User } from "./Models/User.js";
 import type { TSession } from "./util/types.js";
 
 const currentSession: TSession = { user: undefined, noteBook: undefined, note: undefined };
 
 const admin = new Admin("Omar", "omar@admin.com", "admin", "01012345678", 25);
-let users: User[] = [admin];
+
+const users = new Storage<User>();
+users.addItem(admin);
 
 const user1 = new User(
     "Ahmed Ali",
@@ -55,13 +58,13 @@ const note4 = notebook3.addNote(
 );
 
 
-users.push(user1, user2);
+users.addItem(user1, user2);
 
 
 export function addUser(user: User)
 {
     if (!(user instanceof User)) throw new Error("Error adding user");
-    users.push(user);
+    users.addItem(user);
     return true;
 }
 
@@ -72,7 +75,7 @@ export function getUsers()
 
 export function getSingleUser(findCallBackFN: (value: User, index: number, obj: User[]) => unknown)
 {
-    return users.find(findCallBackFN);
+    return users.getItem(findCallBackFN);
 }
 
 
