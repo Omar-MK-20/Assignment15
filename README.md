@@ -1,228 +1,134 @@
-# 📘 Assignment 15 – TypeScript OOP (Simple Notes System)
+# Assignment 15 – Simple Notes Management System (TypeScript OOP CLI)
 
-## 🚀 Overview
-This project implements a **Simple Notes Management System** using **TypeScript OOP concepts**.
+## Description
+This project is a TypeScript, OOP-focused “Simple Notes Management System” implemented as an interactive **command-line** application. It demonstrates core object-oriented concepts (classes, inheritance, composition/aggregation/association patterns, and generics) through the app’s domain models and services.
 
-It demonstrates:
-- Classes & Inheritance
-- Composition, Aggregation, Association
-- Generics
-- UML Class Diagram
+The CLI supports:
+- User **signup** and **login**
+- Selecting or creating **note books**
+- Selecting, creating, **updating**, and **previewing** **notes**
 
----
+## Features
+- OOP domain models:
+  - `User` (with `age` validation)
+  - `Admin` (extends `User`)
+  - `NoteBook` (stores notes)
+  - `Note` (implements `INote` and provides `preview()`)
+  - Generic `Storage<T>` (in-memory collection)
+- In-memory “database” + in-memory session state
+- CLI workflow driven by `@clack/prompts` (select/text/password/confirm prompts)
+- Note preview formatting (shows the first 50 characters of content)
 
-## 🛠️ Tech Stack
-- TypeScript
-- Node.js (optional for running)
-- OOP Principles
+## Tech Stack
+- TypeScript (compiled with `tsc`)
+- Node.js with ES Modules (`"type": "module"`, `module: "nodenext"`)
+- `@clack/prompts` (interactive CLI prompts)
+- `chalk` (terminal styling)
+- Node.js `crypto.randomUUID()` (IDs)
 
----
+## Folder Structure
+- `src/index.ts`: CLI entrypoint and main interactive flow
+- `src/database.ts`: in-memory seeded data + session getters/setters
+- `src/Models/`
+  - `User.ts`
+  - `Admin.ts`
+  - `NoteBook.ts` (also defines `INote` and the internal `Note` implementation)
+  - `Storage.ts`
+- `src/Services/`
+  - `auth.service.ts`: signup/login logic
+  - `note.service.ts`: note book/note operations
+- `src/util/`
+  - `action.enms.ts`: enums used by the CLI
+  - `types.ts`: `TSession` type
 
-## 📁 Project Structure
-```
-src/
-│
-├── models/
-│   ├── User.ts
-│   ├── Admin.ts
-│   ├── Note.ts
-│   ├── NoteBook.ts
-│   └── Storage.ts
-│
-├── index.ts
-│
-└── diagram/
-└── uml-diagram.png (or .pdf)
+Project diagram assets in the repo root:
+- `UML.jpg`
+- `UML.drawio`
+- `Flow Chart.drawio`
 
-````
+## Prerequisites
+- Node.js and npm
 
----
-
-# ✅ Part A – Implementation Tasks
-
-## 👤 1. User Class
-- [ ] Create class `User`
-- [ ] Add all required properties
-- [ ] Apply access modifiers
-- [ ] Validate age (18–60)
-- [ ] Implement `displayInfo()`
-
-### 💡 How to implement
-- Use constructor for initialization
-- Use `private` for sensitive data like password
-- Add validation inside constructor or setter
-- Print user info using `console.log`
-
----
-
-## 👑 2. Admin Class (Inheritance)
-- [ ] Create `Admin` class
-- [ ] Extend `User`
-- [ ] Add `manageNotes()` method
-
-### 💡 How to implement
-- Use `extends User`
-- Call `super(...)` in constructor
-- Add admin-specific behavior only
-
----
-
-## 📝 3. Note Class
-- [ ] Create `Note` class
-- [ ] Add properties
-- [ ] Link note to user
-- [ ] Implement `preview()`
-
-### 💡 How to implement
-- Pass `User` object or `userId`
-- `preview()` → return first 20–30 chars
-
----
-
-## 📚 4. NoteBook Class (Composition)
-- [ ] Create `NoteBook`
-- [ ] Store `Note[]`
-- [ ] Add `addNote()`
-- [ ] Add `removeNote()`
-
-### 💡 How to implement
-- Use internal array `notes: Note[]`
-- Composition → notes belong to notebook lifecycle
-
----
-
-## 🔗 5. Aggregation (User ↔ NoteBook)
-- [ ] Allow user to own multiple notebooks
-
-### 💡 How to implement
-- Add `notebooks: NoteBook[]` inside `User`
-- Notebooks can exist independently
-
----
-
-## 🔄 6. Association (User ↔ Note)
-- [ ] Link note to user (author)
-
-### 💡 How to implement
-- Store `user: User` inside `Note`
-- Keep loose coupling
-
----
-
-## 📦 7. Generic Storage Class
-- [ ] Create `Storage<T>`
-- [ ] Implement:
-  - [ ] `addItem()`
-  - [ ] `removeItem()`
-  - [ ] `getAllItems()`
-
-### 💡 How to implement
-```ts
-class Storage<T> {
-  private items: T[] = [];
-
-  addItem(item: T) {
-    this.items.push(item);
-  }
-
-  removeItem(item: T) {
-    this.items = this.items.filter(i => i !== item);
-  }
-
-  getAllItems(): T[] {
-    return this.items;
-  }
-}
-````
-
----
-
-# 📊 Part B – UML Diagram
-
-## 🧩 Class Diagram
-
-* [ ] Include all classes
-* [ ] Include attributes
-* [ ] Include methods
-* [ ] Show relationships
-
-## 🔍 Relationship Types
-
-* [ ] Inheritance → `Admin → User`
-* [ ] Composition → `NoteBook → Note`
-* [ ] Aggregation → `User → NoteBook`
-* [ ] Association → `Note → User`
-
-### 💡 How to draw
-
-* Use tools like:
-
-  * draw.io
-  * Lucidchart
-  * StarUML
-* Follow UML symbols:
-
-  * ▲ Inheritance
-  * ◆ Composition
-  * ◇ Aggregation
-  * — Association
-
----
-
-# 📈 Progress Tracker
-
-| Task           | Status |
-| -------------- | ------ |
-| User Class     | ⬜      |
-| Admin Class    | ⬜      |
-| Note Class     | ⬜      |
-| NoteBook Class | ⬜      |
-| Storage Class  | ⬜      |
-| Relationships  | ⬜      |
-| UML Diagram    | ⬜      |
-| Testing        | ⬜      |
-
----
-
-# 🎯 Final Submission Checklist
-
-* [ ] All classes implemented
-* [ ] All relationships correctly applied
-* [ ] Code compiles without errors
-* [ ] UML diagram completed
-* [ ] UML matches code
-* [ ] Project organized properly
-* [ ] README updated
-
----
-
-# 🧠 Best Practices
-
-* Keep classes **small and focused**
-* Use **access modifiers properly**
-* Avoid duplicating logic
-* Keep relationships **clear and meaningful**
-* Match UML diagram with actual implementation
-
----
-
-# 🏁 Bonus Tips
-
-* Add sample usage in `index.ts`
-* Test each class individually
-* Use meaningful naming
-
----
-
-## 📌 Example Run (Optional)
-
-```ts
-const user = new User(1, "Ali", "ali@mail.com", "123456", "010000", 25);
-user.displayInfo();
+## Installation
+```bash
+npm install
 ```
 
----
+## Environment Variables
+- None (the codebase does not use `process.env` or `.env`).
 
-## 👨‍💻 Author
+## How to Run / How to Try
+### Run (recommended)
+1. Build:
+   ```bash
+   npm run build
+   ```
+2. Start the CLI:
+   ```bash
+   npm run start:js
+   ```
 
-Your Name Here
+### Dev (watch mode)
+```bash
+npm run dev
+```
+This runs the TypeScript compiler in watch mode and re-runs Node on the compiled `dist/index.js`.
+
+### `start:ts` note
+`npm run start:ts` currently runs `npx -w tsc` (TypeScript compilation only) and does not start the CLI process.
+
+## Usage Overview (CLI)
+When you start the app, you will see:
+1. **Signup** / **Login** / **Exit**
+2. After login, you manage note books and notes:
+   - Select a note book (or choose **Create new NoteBook**)
+   - Select a note (or choose **Create new Note**)
+   - Choose an action:
+     - **Update Note** (enter title and/or content)
+     - **Preview Note** (prints a formatted preview)
+     - **Exit**
+
+### Validation / Business Rules (from code)
+- `User.age` must be between **18 and 60** (inclusive). Invalid values throw an error.
+- Signup:
+  - Prevents duplicate emails
+  - Creates a new user
+  - Automatically creates a notebook named **`main`** for the new user
+- Login:
+  - Requires matching email and password
+- Note preview:
+  - Displays content truncated to the first **50 characters**, followed by `" ..."`
+
+## Seed Data (already in the in-memory “database”)
+On startup, `src/database.ts` seeds:
+- Admin user:
+  - `omar@admin.com` / `admin`
+- Regular users:
+  - `ahmed@example.com` / `123456`
+  - `sara@example.com` / `abcdef`
+- Note books:
+  - For `ahmed@example.com`: `Work Notes`, `Personal Notes`
+  - For `sara@example.com`: `Ideas`
+- Notes are also pre-created under those notebooks.
+
+Because everything is in-memory, any changes you make exist only for the current run.
+
+## Scripts
+From `package.json`:
+- `build`: `npx tsc`
+- `start:js`: `node ./dist/index.js`
+- `start:ts`: `npx -w tsc`
+- `dev`: `concurrently "tsc -w" "node --watch ./dist/index.js" --kill-others`
+
+
+## Notes / Architecture Details
+- **In-memory data layer**: `src/database.ts` uses `Storage<T>` to store users and tracks the current session (`user`, `noteBook`, `note`) for the CLI.
+- **Services layer**:
+  - `AuthService` handles signup/login and session initialization
+  - `NoteService` handles selecting/creating note books, creating/updating notes, and generating previews
+- **Domain models**:
+  - `NoteBook` owns its notes internally (`_notes`)
+  - `Note` references its `author` (`User`) and `noteBook` for association-style modeling
+
+## License
+- This project is for education purposes only.
