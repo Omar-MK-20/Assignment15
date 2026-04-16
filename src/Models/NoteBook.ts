@@ -54,7 +54,7 @@ class Note implements INote
         `);
     }
 
-    public static _create(title: string, content: string, author: User, noteBook: NoteBook)
+    public static create(title: string, content: string, author: User, noteBook: NoteBook)
     {
         return new Note(title, content, author, noteBook);
     }
@@ -85,7 +85,7 @@ export class NoteBook
 
     public addNote(title: string, content: string)
     {
-        const note = Note._create(title, content, this.owner, this);
+        const note = Note.create(title, content, this.owner, this);
         this._notes.push(note);
         return note;
 
