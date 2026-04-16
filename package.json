@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npx tsc",
     "start:js": "node ./dist/index.js",
-    "start:ts": "npx tsc",
+    "start:ts": "npx -w tsc",
     "dev": "concurrently \"tsc -w\" \"node --watch ./dist/index.js\" --kill-others"
   },
   "devDependencies": {
