@@ -8,8 +8,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "npx tsc",
-    "start:js": "node --watch ./dist/index.js",
-    "start:ts": "npx tsc -w",
+    "start:js": "node ./dist/index.js",
+    "start:ts": "npx tsc",
     "dev": "concurrently \"tsc -w\" \"node --watch ./dist/index.js\" --kill-others"
   },
   "devDependencies": {
