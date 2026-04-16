@@ -23,7 +23,7 @@ Use this checklist to track what is done and what still needs to be completed.
 - [x] Add `age: number`
 - [x] Validate that age is between 18 and 60
 - [x] Use access modifiers properly
-- [ ] Add `displayInfo()` method
+- [x] Add `displayInfo()` method
 
 **How to do it**
 1. Create a `User.ts` file.
@@ -37,7 +37,7 @@ Use this checklist to track what is done and what still needs to be completed.
 ### 2) Inheritance – `Admin`
 - [x] Create `Admin` class
 - [x] Extend `User`
-- [ ] Add a method to manage notes
+- [x] Add a method to manage notes
 - [x] Use inheritance correctly
 
 **How to do it**
@@ -70,7 +70,7 @@ Use this checklist to track what is done and what still needs to be completed.
 - [x] Store a collection of `Note` objects
 - [x] Add `addNote()`
 - [x] Add `removeNote()`
-- [ ] Make the relationship composition
+- [x] Make the relationship composition
 
 **How to do it**
 1. Create a `NoteBook.ts` file.
@@ -82,9 +82,9 @@ Use this checklist to track what is done and what still needs to be completed.
 ---
 
 ### 5) Aggregation – `User` and `NoteBook`
-- [ ] Link `User` and `NoteBook`
+- [x] Link `User` and `NoteBook`
 - [x] Allow one user to own multiple notebooks
-- [ ] Represent the relationship as aggregation
+- [x] Represent the relationship as aggregation
 
 **How to do it**
 1. Add a `notebooks` array inside `User` or a `user` reference inside `NoteBook`.
@@ -94,9 +94,9 @@ Use this checklist to track what is done and what still needs to be completed.
 ---
 
 ### 6) Association – `Note` and `User`
-- [ ] Link `Note` to `User`
-- [ ] Ensure each note has an author
-- [ ] Represent the relationship as association
+- [x] Link `Note` to `User`
+- [x] Ensure each note has an author
+- [x] Represent the relationship as association
 
 **How to do it**
 1. Store the author as a `User` reference in `Note`.
@@ -106,11 +106,11 @@ Use this checklist to track what is done and what still needs to be completed.
 ---
 
 ### 7) Generics – `Storage`
-- [ ] Create generic class `Storage<T>`
-- [ ] Store any type of data
-- [ ] Add `addItem()`
-- [ ] Add `removeItem()`
-- [ ] Add `getAllItems()`
+- [x] Create generic class `Storage<T>`
+- [x] Store any type of data
+- [x] Add `addItem()`
+- [x] Add `removeItem()`
+- [x] Add `getAllItems()`
 
 **How to do it**
 1. Create a `Storage.ts` file.
@@ -125,11 +125,11 @@ Use this checklist to track what is done and what still needs to be completed.
 ## Part B – UML Diagram
 
 ### 1) Class Diagram
-- [ ] Draw UML class diagram
-- [ ] Include all classes
-- [ ] Include all attributes
-- [ ] Include all methods
-- [ ] Show all relationships
+- [x] Draw UML class diagram
+- [x] Include all classes
+- [x] Include all attributes
+- [x] Include all methods
+- [x] Show all relationships
 
 **How to do it**
 1. List every class from Part A.
@@ -141,10 +141,10 @@ Use this checklist to track what is done and what still needs to be completed.
 ---
 
 ### 2) Identify Relationships
-- [ ] Mark inheritance
-- [ ] Mark composition
-- [ ] Mark aggregation
-- [ ] Mark association
+- [x] Mark inheritance
+- [x] Mark composition
+- [x] Mark aggregation
+- [x] Mark association
 
 **How to do it**
 1. Use a closed triangle arrow for inheritance.
@@ -156,20 +156,20 @@ Use this checklist to track what is done and what still needs to be completed.
 ---
 
 ## Progress Tracker
-- [ ] User class completed
-- [ ] Admin class completed
-- [ ] Note class completed
-- [ ] NoteBook class completed
-- [ ] Storage class completed
-- [ ] UML diagram completed
-- [ ] Relationship types identified
-- [ ] Code tested
-- [ ] README updated
+- [x] User class completed
+- [x] Admin class completed
+- [x] Note class completed
+- [x] NoteBook class completed
+- [x] Storage class completed
+- [x] UML diagram completed
+- [] Relationship types identified
+- [x] Code tested
+- [x] README updated
 
 ---
 
 ## Notes
 - Keep class names and property names consistent.
-- Use TypeScript types properly.
+- Ue TypeScript types properly.
 - Make sure the UML diagram reflects the implementation exactly.
 - Keep the code clean and easy to read.
